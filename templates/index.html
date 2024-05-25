@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        main {
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            tr {
+                margin-bottom: 0.625em;
+            }
+
+            th {
+                text-align: right;
+                padding-right: 50%;
+            }
+
+            td {
+                text-align: right;
+                padding-right: 50%;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 1em;
+                font-weight: bold;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Supply Management System</h1>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Supplier</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Item ID">1</td>
+                    <td data-label="Item Name">Pens</td>
+                    <td data-label="Quantity">100</td>
+                    <td data-label="Supplier">Office Supplies Co.</td>
+                </tr>
+                <tr>
+                    <td data-label="Item ID">2</td>
+                    <td data-label="Item Name">Notebooks</td>
+                    <td data-label="Quantity">200</td>
+                    <td data-label="Supplier">Stationery World</td>
+                </tr>
+                <tr>
+                    <td data-label="Item ID">3</td>
+                    <td data-label="Item Name">Markers</td>
+                    <td data-label="Quantity">150</td>
+                    <td data-label="Supplier">Art Supplies Inc.</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
