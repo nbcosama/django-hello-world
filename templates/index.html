@@ -53,6 +53,50 @@
         tr:hover {
             background-color: #ddd;
         }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Error styling for inputs */
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
 
         @media (max-width: 600px) {
             table, thead, tbody, th, td, tr {
@@ -101,28 +145,32 @@
                     <th>Supplier</th>
                 </tr>
             </thead>
+            {% for all_data in all_data %}
             <tbody>
                 <tr>
-                    <td data-label="Item ID">1</td>
-                    <td data-label="Item Name">Pens</td>
-                    <td data-label="Quantity">100</td>
-                    <td data-label="Supplier">Office Supplies Co.</td>
+                    <td data-label="Item ID">{{all_data.id}}</td>
+                    <td data-label="Item Name">{{all_data.item_name}}</td>
+                    <td data-label="Quantity">{{all_data.quantity}}</td>
+                    <td data-label="Supplier">{{all_data.supplier}}</td>
                 </tr>
-                <tr>
-                    <td data-label="Item ID">2</td>
-                    <td data-label="Item Name">Notebooks</td>
-                    <td data-label="Quantity">200</td>
-                    <td data-label="Supplier">Stationery World</td>
-                </tr>
-                <tr>
-                    <td data-label="Item ID">3</td>
-                    <td data-label="Item Name">Markers</td>
-                    <td data-label="Quantity">150</td>
-                    <td data-label="Supplier">Art Supplies Inc.</td>
-                </tr>
+              
                 <!-- Add more rows as needed -->
             </tbody>
+            {% endfor %}
         </table>
     </main>
+    <h2>Create Supply</h2>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
