@@ -145,7 +145,7 @@
                     <th>Supplier</th>
                 </tr>
             </thead>
-          
+            {% for all_data in all_data %}
             <tbody>
                 <tr>
                     <td data-label="Item ID">{{all_data.id}}</td>
@@ -156,7 +156,7 @@
               
                 <!-- Add more rows as needed -->
             </tbody>
-        
+            {% endfor %}
         </table>
     </main>
     <h2>Create Supply</h2>
