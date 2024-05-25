@@ -88,7 +88,7 @@ else:
     DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'supply-postgres',
+        'NAME': 'verceldb',
         'USER': 'default',
         'PASSWORD': 'j3n9NFMxLQBI',
         'HOST': 'localhost',
