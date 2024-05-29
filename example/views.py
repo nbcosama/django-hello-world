@@ -40,6 +40,10 @@ def signout(request):
 
 
 
+
+
+
+
 def signup(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
@@ -81,7 +85,7 @@ def signup(request):
 
             # Create a User with the buyer's first name
 
-            messages.success(request, "successfully added")
+            messages.success(request, "Account Successfully Created")
             return redirect('landingpage')
         except IntegrityError:
             messages.error(request, 'There was an error creating the buyer. Please try again.')
@@ -104,7 +108,7 @@ def index(request):
     
     
     if user.user_type == 'seller':
-        cart_product = MyCart.objects.filter(product__added_by_id = user.id, status = "purchased")
+        cart_product = MyCart.objects.filter(product__added_by_id = user.id, status = "purchased").order_by('-id')
         product_count = cart_product.count()
         purchased = MyCart.objects.filter(product__added_by_id = user.id, delivery_status = "delivered").count()
         pending = MyCart.objects.filter(product__added_by_id = user.id, delivery_status = "pending").count()
@@ -182,7 +186,10 @@ def cart(request):
             messages.warning(request, "Product Removed Successfully")
             return redirect('cart')
     
+    
+    
+    order_placed = MyCart.objects.filter(added_by = user, status = "purchased").order_by('-id')
     cart_product = MyCart.objects.filter(added_by = user, status = "cart")
     cart_product_count = cart_product.count()
-    context = {'user':user, 'cart_product':cart_product, 'cart_product_count':cart_product_count}
+    context = {'user':user, 'cart_product':cart_product, 'cart_product_count':cart_product_count, 'order_placed':order_placed}
     return render(request, 'cart.html', context)
