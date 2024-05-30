@@ -1,165 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supply Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+{% extends 'skeleton.html' %}
 
-        header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-        }
+{% block title %}My Dashboard{% endblock %}
+ 
+{% block content %}
 
-        main {
-            margin: 2rem auto;
-            width: 90%;
-            max-width: 1200px;
-        }
-
-        h1 {
-            margin: 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #ddd;
-        }
-       
-
-        /* Error styling for inputs */
-        .error-message {
-            color: red;
-            margin-top: 5px;
-        }
-
-        @media (max-width: 600px) {
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            tr {
-                margin-bottom: 0.625em;
-            }
-
-            th {
-                text-align: right;
-                padding-right: 50%;
-            }
-
-            td {
-                text-align: right;
-                padding-right: 50%;
-                position: relative;
-                padding-left: 50%;
-            }
-
-            td:before {
-                content: attr(data-label);
-                position: absolute;
-                left: 0;
-                width: 50%;
-                padding-left: 1em;
-                font-weight: bold;
-                text-align: left;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Supply Management System</h1>
-    </header>
-    <main>
-        <table>
-            <thead>
-                <tr>
-                    <th>Item ID</th>
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Supplier</th>
-                </tr>
-            </thead>
-            {% for all_data in all_data %}
-            <tbody>
-                <tr>
-                    <td data-label="Item ID">{{forloop.counter}}</td>
-                    <td data-label="Item Name">{{all_data.item_name}}</td>
-                    <td data-label="Quantity">{{all_data.quantity}}</td>
-                    <td data-label="Supplier">{{all_data.supplier}}</td>
-                </tr>
-              
-                <!-- Add more rows as needed -->
-            </tbody>
-            {% endfor %}
-        </table>
-    </main>
-
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <div class="container mx-auto py-8">
-        <h2 class="text-2xl font-bold mb-4">Create Supply</h2>
-        <form method="post" class="max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            {% csrf_token %}
-            <!-- Item Name -->
-            <div class="mb-4">
-                <label for="item_name" class="block text-gray-700 text-sm font-bold mb-2">Item Name</label>
-                {{ form.item_name }}
-            </div>
-            <!-- Quantity -->
-            <div class="mb-4">
-                <label for="quantity" class="block text-gray-700 text-sm font-bold mb-2">Quantity</label>
-                {{ form.quantity }}
-            </div>
-            <!-- Supplier -->
-            <div class="mb-4">
-                <label for="supplier" class="block text-gray-700 text-sm font-bold mb-2">Supplier</label>
-                {{ form.supplier }}
-            </div>
-            <!-- Supplyer Name -->
-            <div class="mb-4">
-                <label for="supplyer_name" class="block text-gray-700 text-sm font-bold mb-2">Supplyer Name</label>
-                {{ form.supplyer_name }}
-            </div>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Submit
-            </button>
-        </form>
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+      {{ message }}
+      <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}
+ <!-- Add Product Section -->
+ <section id="add-product" class="mb-8">
+  <h2 class="text-2xl font-bold mb-4">Welcome To Your Dash {{user.first_name}} {{user.last_name}}</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Card 1 -->
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <div class="flex items-center">
+        <div class="bg-blue-500 text-white p-3 rounded-full">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="ml-4">
+          <h2 class="text-lg font-semibold text-gray-700">Purchased</h2>
+          <p class="text-gray-500">{{data.purchased}}</p>
+        </div>
+      </div>
     </div>
 
-</body>
-</html>
+    <!-- Card 2 -->
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <div class="flex items-center">
+        <div class="bg-green-500 text-white p-3 rounded-full">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="ml-4">
+          <h2 class="text-lg font-semibold text-gray-700">Orders</h2>
+          <p class="text-gray-500">{{data.product_count}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <div class="flex items-center">
+        <div class="bg-yellow-500 text-white p-3 rounded-full">
+          <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div class="ml-4">
+          <h2 class="text-lg font-semibold text-gray-700">Pendings</h2>
+          <p class="text-gray-500">{{data.pending}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <div class="flex items-center">
+        <div class="bg-red-500 text-white p-3 rounded-full">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="ml-4">
+          <h2 class="text-lg font-semibold text-gray-700">Revenue</h2>
+          <p class="text-gray-500">RS.{{total_amount}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  </section>
+
+  
+  <!-- Orders Section -->
+  <section id="orders" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Orders</h2>
+    <div class="bg-white p-6 rounded shadow-md">
+      <table class="w-full table-auto">
+        <thead>
+          <tr>
+            <th class="px-4 py-2">SN</th>
+            <th class="px-4 py-2">Customer</th>
+            <th class="px-4 py-2">Order ID</th>
+            <th class="px-4 py-2">Product Name</th>
+            <th class="px-4 py-2">Quantity</th>
+            <th class="px-4 py-2">Total Amount</th>
+            <th class="px-4 py-2">Status</th>
+            <th class="px-4 py-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cart_product in cart_product %}
+          <tr>
+            <td class="border px-4 py-2">{{forloop.counter}}</td>
+            <td class="border px-4 py-2">{{cart_product.added_by}}</td>
+            <td class="border px-4 py-2">{{cart_product.id}}</td>
+            <td class="border px-4 py-2">{{cart_product.product.name}}</td>
+            
+            <td class="border px-4 py-2">{{cart_product.quantity}}</td>  
+            <td class="border px-4 py-2">{{cart_product.total_amount}}</td>
+            <td class="border px-4 py-2">{{cart_product.delivery_status}}</td>
+            <td class="border px-4 py-2">
+              {% if cart_product.delivery_status == "pending" %}
+              <form class="flex items-center" action="/dashboard?action=delivered&id={{ cart_product.id }}" method="post">
+                {% csrf_token %}
+              <button class="bg-green-500 text-white px-4 py-1 rounded-md hover:bg-green-600">
+                <i class="fas fa-cart-plus mr-2"></i>Delivered
+              </button>
+              </form>
+              {% else %}
+              <p>Completed</p>
+              {% endif %}
+
+            </td>
+          
+          </tr>
+         {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Sales Section -->
+  <section id="sales" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Sales</h2>
+    <div class="bg-white p-6 rounded shadow-md">
+      <table class="w-full table-auto">
+        <thead>
+          <tr>
+            <th class="px-4 py-2">Product</th>
+            <th class="px-4 py-2">Quantity Sold</th>
+            <th class="px-4 py-2">Total Earnings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border px-4 py-2">Tomatoes</td>
+            <td class="border px-4 py-2">50</td>
+            <td class="border px-4 py-2">$200</td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2">Carrots</td>
+            <td class="border px-4 py-2">30</td>
+            <td class="border px-4 py-2">$90</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Status Section -->
+  <section id="status">
+    <h2 class="text-2xl font-bold mb-4">Status</h2>
+    <div class="bg-white p-6 rounded shadow-md">
+      <p class="text-gray-700">All systems are operational. No issues to report.</p>
+    </div>
+  </section>
+
+
+  {% endblock %}

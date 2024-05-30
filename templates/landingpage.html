@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-lg">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="#" class="text-xl font-bold text-gray-800">Brand</a>
+      <div class="hidden md:flex space-x-4">
+        <a href="#" class="text-gray-800 hover:text-gray-600">Home</a>
+        <a href="#" class="text-gray-800 hover:text-gray-600">About</a>
+        <a href="#" class="text-gray-800 hover:text-gray-600">Services</a>
+        <a href="#" class="text-gray-800 hover:text-gray-600">Contact</a>
+        <button id="loginBtn" class="text-gray-800 hover:text-gray-600 focus:outline-none">Login</button>
+      </div>
+    </div>
+  </nav>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {{ message }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <!-- Hero Section -->
+  <section class="bg-gray-200 py-20">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-4 text-gray-800">Welcome to Our Landing Page</h2>
+      <p class="text-gray-600 mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+      <a href="/signup" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-20">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Features</h2>
+      <div class="flex flex-wrap -mx-4">
+        <div class="w-full md:w-1/3 px-4 mb-8">
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="mb-4">
+              <svg class="h-16 w-16 text-green-500 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-6a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h4 class="text-2xl font-bold mb-2 text-gray-800">Feature One</h4>
+            <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+          </div>
+        </div>
+        <div class="w-full md:w-1/3 px-4 mb-8">
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="mb-4">
+              <svg class="h-16 w-16 text-green-500 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <h4 class="text-2xl font-bold mb-2 text-gray-800">Feature Two</h4>
+            <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+          </div>
+        </div>
+        <div class="w-full md:w-1/3 px-4 mb-8">
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="mb-4">
+              <svg class="h-16 w-16 text-green-500 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-6a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h4 class="text-2xl font-bold mb-2 text-gray-800">Feature Three</h4>
+            <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="bg-green-500 py-20">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-4 text-white">Ready to get started?</h2>
+      <p class="text-white mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+      <a href="/signup" class="bg-white text-green-500 py-2 px-4 rounded hover:bg-gray-200">Sign Up Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 py-6">
+    <div class="container mx-auto px-6 text-center text-white">
+      <p>&copy; 2024 Brand. All rights reserved.</p>
+    </div>
+  </footer>
+
+<!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-8 rounded-md shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Login</h2>
+      <!-- Login Form -->
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label for="username" class="block text-gray-800 mb-2">Username</label>
+          <input type="text" id="username" name="username" class="w-full px-3 py-2 border rounded-md" required>
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-gray-800 mb-2">Password</label>
+          <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded-md" required>
+        </div>
+        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Login</button>
+      </form>
+      <!-- Close Button -->
+      <button id="closeBtn" class="absolute top-0 right-0 mt-4 mr-4 text-gray-800 hover:text-gray-600 focus:outline-none">&times;</button>
+    </div>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeBtn = document.getElementById('closeBtn');
+
+    // Open login modal
+    loginBtn.addEventListener('click', () => {
+    {% if auth %}
+    window.location.href='/dashboard'
+    {% else %}
+    loginModal.classList.remove('hidden');
+    {% endif %}
+  
+    });
+
+    // Close login modal
+    closeBtn.addEventListener('click', () => {
+      loginModal.classList.add('hidden');
+    });
+
+    // Close modal on outside click
+    window.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        loginModal.classList.add('hidden');
+      }
+    });
+  </script>
+
+
+</body>
+</html>

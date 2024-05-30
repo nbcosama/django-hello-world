@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <div class="min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-green-600 text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="/dashboard" class="flex items-center mr-4">
+        <h1 class="text-2xl font-bold">Dashboard</h1>
+      </a>
+        <div class="flex items-center">
+          <a href="/cart" class="flex items-center mr-4">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.6 8H5a1 1 0 001 1h12a1 1 0 001-1h-.4L17 13M7 13L5.4 5M16 6h.01M12 6h.01M8 6h.01"></path>
+            </svg>
+            <span>Cart</span>
+          </a>
+          {% if cart_product_count %}
+          <span id="cart-count" class="absolute top-2 right-40  bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">{{cart_product_count}}</span>
+          {% else %}
+          {% endif %}
+          <a href="/signout"><button class="bg-green-700 px-4 py-2 rounded">Logout</button></a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto flex flex-grow py-6">
+      <!-- Sidebar -->
+     
+
+      <!-- Content Area -->
+      <main class="w-full ml-6">
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 relative" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+            <button class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none'">
+              <svg class="fill-current h-6 w-6 text-green-700" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <title>Close</title>
+                <path d="M14.348 14.849a1 1 0 01-1.414 0L10 11.414 7.066 14.35a1 1 0 11-1.414-1.414L8.586 10 5.652 7.066a1 1 0 111.414-1.414L10 8.586l2.934-2.934a1 1 0 111.414 1.414L11.414 10l2.934 2.934a1 1 0 010 1.415z"/>
+              </svg>
+            </button>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+         <!-- Add Product Section -->
+       
+          <h2 class="text-2xl font-bold mb-4">Welcome To Your Dash {{user.first_name}} {{user.last_name}}</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+              <div class="flex items-center">
+                <div class="bg-blue-500 text-white p-3 rounded-full">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="ml-4">
+                  <h2 class="text-lg font-semibold text-gray-700">Users</h2>
+                  <p class="text-gray-500">1,234</p>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Card 2 -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+              <div class="flex items-center">
+                <div class="bg-green-500 text-white p-3 rounded-full">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="ml-4">
+                  <h2 class="text-lg font-semibold text-gray-700">Orders</h2>
+                  <p class="text-gray-500">567</p>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Card 3 -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+              <div class="flex items-center">
+                <div class="bg-yellow-500 text-white p-3 rounded-full">
+                  <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="ml-4">
+                  <h2 class="text-lg font-semibold text-gray-700">Revenue</h2>
+                  <p class="text-gray-500">$12,345</p>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Card 4 -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+              <div class="flex items-center">
+                <div class="bg-red-500 text-white p-3 rounded-full">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="ml-4">
+                  <h2 class="text-lg font-semibold text-gray-700">Alerts</h2>
+                  <p class="text-gray-500">23</p>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+       
+        
+        
+          <!-- Orders Section -->
+          <section id="orders" class="mb-8 flex flex-wrap">
+            <!-- Buyer Card -->
+            {% for products in products %}
+            <div class="bg-white shadow-md rounded-lg p-6 mr-4 mt-4 w-1/4">
+              <div class="flex items-center">
+                <div class="bg-blue-500 text-white p-3 rounded-full">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="ml-4">
+                  <h2 class="text-lg font-semibold text-gray-700">{{products.name}}</h2>
+                  <p class="text-gray-500">Seller: {{products.added_by}}</p>
+                </div>
+              </div>
+              <div class="mt-4 flex justify-center">
+                {% if products.image %}
+                <img src="/media/{{products.image}}" alt="Item Image" class="w-32 h-32 object-cover rounded-lg">
+                {% else %}
+                <p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1qWAIpqePEAH-UPypnABjdT_eNu7hlLi54Q&s" alt="Item Image" class="w-32 h-32 object-cover rounded-lg"></p>
+                {% endif %}
+              </div>
+              <div class="mt-4 flex justify-between">
+                <form class="flex items-center" action="/dashboard?action=addtocart&id={{ products.id }}" method="post">
+                  {% csrf_token %}
+                <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                  <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                </button>
+                </form>
+                {% comment %} <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                  <i class="fas fa-shopping-bag mr-2"></i>Purchase
+                </button> {% endcomment %}
+              </div>
+            </div>
+            {% endfor %}
+          </section>
+        
+          <!-- Status Section -->
+          <section id="status">
+            <h2 class="text-2xl font-bold mb-4">Status</h2>
+            <div class="bg-white p-6 rounded shadow-md">
+              <p class="text-gray-700">All systems are operational. No issues to report.</p>
+            </div>
+          </section>
+        
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
